@@ -2,10 +2,9 @@ import {
   CNavItem,
   CNavTitle,
   CSidebar,
-  CSidebarBrand,
-  CSidebarNav,
+  CSidebarNav
 } from "@coreui/react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Sidebar = () => {
