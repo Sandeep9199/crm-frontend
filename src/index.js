@@ -1,26 +1,41 @@
-import Auth from "./pages/Auth";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import "@coreui/coreui/dist/css/coreui.min.css";
-import { Route, Routes } from "react-router-dom";
-import Engineer from "./pages/Engineer";
-import Customer from "./pages/Customer";
-import Admin from "./pages/Admin";
+import App from "./App";
 
-function App() {
-  return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<Auth />} />
-        <Route path="/engineer" element={<Engineer />} />
-        <Route path="/customer" element={<Customer />} />
-        <Route path="/admin" element={<Admin />} />
-      </Routes>
-    </div>
-  );
-}
+import "./index.css";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
-export default App;
+axios.interceptors.request.use(function (config) {
+  const token = localStorage.getItem("token");
+  config.headers["x-access-token"] = token;
+
+  return config;
+});
+
+axios.interceptors.response.use(
+  function (response) {
+    return response
+  },
+  function (error) {
+    if (error.response.status === 401) {
+      localStorage.clear();
+      toast.success(
+        "You have been logged out. Login with your credentials to continue!"
+      );
+      window.location.href = "/";
+      window.location.reload();
+    }
+  }
+);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <BrowserRouter>
+    <ToastContainer />
+    <App />
+  </BrowserRouter>
+);
