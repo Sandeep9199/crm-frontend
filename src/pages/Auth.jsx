@@ -125,7 +125,7 @@ const Auth = () => {
 
   return (
     <div id="loginPage">
-      <div className="bg-primary d-flex justify-content-center align-items-center vh-100">
+      <div className="bg-secondary d-flex justify-content-center align-items-center vh-100">
         <div className="card m-5 p-5">
           <div className="row m-2">
             <div className="col">
